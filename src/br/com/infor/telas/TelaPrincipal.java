@@ -33,7 +33,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Desktop = new javax.swing.JDesktopPane();
         jLabel1 = new javax.swing.JLabel();
-        lblUsuário = new javax.swing.JLabel();
+        lblUsuario = new javax.swing.JLabel();
         lblData = new javax.swing.JLabel();
         Menu = new javax.swing.JMenuBar();
         MenCad = new javax.swing.JMenu();
@@ -69,8 +69,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infor/icones/iconfinder_Sharethis_324476 (1).png"))); // NOI18N
 
-        lblUsuário.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblUsuário.setText("Usuário");
+        lblUsuario.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblUsuario.setText("Usuário");
 
         lblData.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblData.setText("Data");
@@ -149,8 +149,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(lblData)
-                    .addComponent(lblUsuário))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addComponent(lblUsuario))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,15 +159,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(51, 51, 51)
-                .addComponent(lblUsuário)
+                .addComponent(lblUsuario)
                 .addGap(29, 29, 29)
                 .addComponent(lblData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(36, 36, 36))
         );
 
-        setSize(new java.awt.Dimension(715, 400));
+        setSize(new java.awt.Dimension(742, 458));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -252,6 +252,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar Menu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblData;
-    private javax.swing.JLabel lblUsuário;
+    public static javax.swing.JLabel lblUsuario;
     // End of variables declaration//GEN-END:variables
 }
