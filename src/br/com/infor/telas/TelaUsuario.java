@@ -127,6 +127,31 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
 
     }
 
+    //método responsável pela remoção de usuários
+    private void remover() {
+        //a estrutura abaixo confirma a remoção do usuário
+        int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja remover este usuário", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (confirma == JOptionPane.YES_OPTION) {
+            String sql = "delete from tbusuarios where iduser=?";
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, txtUsuId.getText());
+                int apagado = pst.executeUpdate();
+                if(apagado > 0 ){
+                    JOptionPane.showMessageDialog(null, "Usuário removido com sucesso");
+                    //as linhas abaixo limpam os campos
+                    txtUsuId.setText(null);
+                    txtUsuNome.setText(null);
+                    txtUsuFone.setText(null);
+                    txtUsuLogin.setText(null);
+                    txtUsuSenha.setText(null);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -214,6 +239,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         BtnUsuDelete.setToolTipText("Remover");
         BtnUsuDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BtnUsuDelete.setPreferredSize(new java.awt.Dimension(80, 80));
+        BtnUsuDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnUsuDeleteActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("* Campos obrigatórios");
 
@@ -319,6 +349,11 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         // chamando o método alterar
         alterar();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void BtnUsuDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnUsuDeleteActionPerformed
+        // chamando o método remover
+        remover();
+    }//GEN-LAST:event_BtnUsuDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
