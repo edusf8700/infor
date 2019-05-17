@@ -7,8 +7,6 @@ package br.com.infor.telas;
 
 import java.sql.*;
 import br.com.infor.dal.ModuloConexao;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
