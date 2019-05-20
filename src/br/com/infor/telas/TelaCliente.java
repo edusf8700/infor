@@ -5,18 +5,57 @@
  */
 package br.com.infor.telas;
 
+import java.sql.*;
+import br.com.infor.dal.ModuloConexao;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Eduardo
  */
 public class TelaCliente extends javax.swing.JInternalFrame {
-
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
     /**
      * Creates new form TelaCliente
      */
     public TelaCliente() {
         initComponents();
+        conexao = ModuloConexao.conector();
     }
+    //metódo para adicionar clientes
+    private void adicionar() {
+        String sql = "insert into tbcliente(nomecli,endcli,fonecli,emailcli) values (?,?,?,?)";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtCliNome.getText());
+            pst.setString(2, txtCliEndereco.getText());
+            pst.setString(3, txtCliFone.getText());
+            pst.setString(4, txtCliEmail.getText());
+            //validação dos campos obrigatórios 
+            if ((txtCliNome.getText().isEmpty()) || (txtCliFone.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios");
+            } else {
+
+                //a linha abaixo atualiza a tabela cliente com os dados do formulário 
+                //a estrutura a abaixo é usada para confirma a inserção dos dados na tabela 
+                int confirmado = pst.executeUpdate();
+                if (confirmado > 0) {
+                    JOptionPane.showMessageDialog(null, "Cliente adicionado com sucesso");
+                    //as linhas abaixo limpam os campos
+                    txtCliNome.setText(null);
+                    txtCliEndereco.setText(null);
+                    txtCliFone.setText(null);
+                    txtCliEmail.setText(null);
+
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,7 +71,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtCliNome = new javax.swing.JTextField();
-        tblCliEndereco = new javax.swing.JTextField();
+        txtCliEndereco = new javax.swing.JTextField();
         txtCliFone = new javax.swing.JTextField();
         txtCliEmail = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -52,7 +91,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
 
         jLabel3.setText("* Telefone");
 
-        jLabel4.setText("* email");
+        jLabel4.setText(" email");
 
         txtCliNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,9 +99,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        tblCliEndereco.addActionListener(new java.awt.event.ActionListener() {
+        txtCliEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tblCliEnderecoActionPerformed(evt);
+                txtCliEnderecoActionPerformed(evt);
             }
         });
 
@@ -75,6 +114,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jLabel5.setText("* campos obrigatórios");
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infor/icones/create.png"))); // NOI18N
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infor/icones/update.png"))); // NOI18N
 
@@ -126,7 +170,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                                     .addComponent(txtCliFone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtCliEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtCliNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                                    .addComponent(tblCliEndereco, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(txtCliEndereco, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(134, 134, 134))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btnAdicionar)
@@ -159,7 +203,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                     .addComponent(txtCliNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tblCliEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCliEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -180,9 +224,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblCliEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tblCliEnderecoActionPerformed
+    private void txtCliEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCliEnderecoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblCliEnderecoActionPerformed
+    }//GEN-LAST:event_txtCliEnderecoActionPerformed
 
     private void txtCliEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCliEmailActionPerformed
         // TODO add your handling code here:
@@ -191,6 +235,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private void txtCliNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCliNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCliNomeActionPerformed
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // método para adicionar clientes
+        adicionar();
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -204,9 +253,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField tblCliEndereco;
     private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtCliEmail;
+    private javax.swing.JTextField txtCliEndereco;
     private javax.swing.JTextField txtCliFone;
     private javax.swing.JTextField txtCliNome;
     private javax.swing.JTextField txtCliPesquisar;
