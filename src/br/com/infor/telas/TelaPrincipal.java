@@ -234,6 +234,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void MenCadOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenCadOsActionPerformed
         // chamando a TelaOs
+        TelaOs Os = new TelaOs();
+        Os.setVisible(true);
+        Desktop.add(Os);
+        
 
     }//GEN-LAST:event_MenCadOsActionPerformed
 
