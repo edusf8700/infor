@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -183,6 +183,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         txtCliId = new javax.swing.JTextField();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Clientes");
 
         jLabel1.setText("* Nome");
