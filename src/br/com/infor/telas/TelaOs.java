@@ -118,21 +118,68 @@ public class TelaOs extends javax.swing.JInternalFrame {
                 txtOsTec.setText(rs.getString(8));
                 txtOsValor.setText(rs.getString(9));
                 txtCliId.setText(rs.getString(10));
-                
+
                 //evitando erros
                 btnOsAdicionar.setEnabled(false);
                 txtCliPesquisar.setEnabled(false);
                 tblClientes.setVisible(false);
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "OS não encontrada");
             }
         } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException e) {
             JOptionPane.showMessageDialog(null, "OS inválida");
             //System.out.println(e);
-        } catch(Exception e2){
+        } catch (Exception e2) {
             JOptionPane.showMessageDialog(null, e2);
         }
+    }
+
+    //método´para alterar OS
+    private void alterar_os() {
+        String sql = "update tbos set tipo = ?, situacao = ?, equipamento = ?, defeito = ?, servico = ?, tecnico = ?, valor = ?where os = ? ";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, tipo);
+            pst.setString(2, cboOsSit.getSelectedItem().toString());
+            pst.setString(3, txtOsEquip.getText());
+            pst.setString(4, txtOsDef.getText());
+            pst.setString(5, txtOsServ.getText());
+            pst.setString(6, txtOsTec.getText());
+            //.replace substituia a vírgula pelo o ponto
+            pst.setString(7, txtOsValor.getText().replace(",", "."));
+            pst.setString(8, txtOs.getText());
+
+            //validação dos campos obrigatórios 
+            if ((txtCliId.getText().isEmpty()) || (txtOsEquip.getText().isEmpty()) || (txtOsDef.getText().isEmpty()) || (txtOsServ.getText().isEmpty()) || (txtOsTec.getText().isEmpty()) || (txtOsValor.getText().isEmpty())) {
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios");
+            } else {
+                int adicionado = pst.executeUpdate();
+                if (adicionado > 0) {
+                    JOptionPane.showMessageDialog(null, "OS alterada com sucesso");
+
+                    //limpando campos
+                    txtOs.setText(null);
+                    txtData.setText(null);
+                    txtCliId.setText(null);
+                    txtOsEquip.setText(null);
+                    txtOsDef.setText(null);
+                    txtOsServ.setText(null);
+                    txtOsTec.setText(null);
+                    txtOsValor.setText(null);
+
+                    //habilitar os objetos
+                    btnOsAdicionar.setEnabled(true);
+                    txtCliPesquisar.setEnabled(true);
+                    tblClientes.setVisible(true);
+                }
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
     }
 
     /**
@@ -382,6 +429,11 @@ public class TelaOs extends javax.swing.JInternalFrame {
         });
 
         btnOsAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infor/icones/update.png"))); // NOI18N
+        btnOsAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOsAlterarActionPerformed(evt);
+            }
+        });
 
         btnOsExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infor/icones/delete.png"))); // NOI18N
 
@@ -532,6 +584,11 @@ public class TelaOs extends javax.swing.JInternalFrame {
         // chamando o método pesquisar_Os
         pesquisar_os();
     }//GEN-LAST:event_btnOsPesquisarActionPerformed
+
+    private void btnOsAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsAlterarActionPerformed
+        // chamando o método altear_os
+        alterar_os();
+    }//GEN-LAST:event_btnOsAlterarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
