@@ -182,6 +182,41 @@ public class TelaOs extends javax.swing.JInternalFrame {
 
     }
 
+    //método para excluir OS
+    private void excluir_os() {
+        int confirmar = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir essa OS","Atenção", JOptionPane.YES_NO_OPTION);
+        if (confirmar == JOptionPane.YES_OPTION) {
+            String sql = "delete from tbos where os = ?";
+            try {
+                pst = conexao.prepareStatement(sql);
+                pst.setString(1, txtOs.getText());
+
+                int excluido = pst.executeUpdate();
+                if (excluido > 0) {
+                    JOptionPane.showMessageDialog(null, "OS excluida com sucesso");
+
+                    //limpando campos
+                    txtOs.setText(null);
+                    txtData.setText(null);
+                    txtCliId.setText(null);
+                    txtOsEquip.setText(null);
+                    txtOsDef.setText(null);
+                    txtOsServ.setText(null);
+                    txtOsTec.setText(null);
+                    txtOsValor.setText(null);
+
+                    //habilitar os objetos
+                    btnOsAdicionar.setEnabled(true);
+                    txtCliPesquisar.setEnabled(true);
+                    tblClientes.setVisible(true);
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -230,10 +265,6 @@ public class TelaOs extends javax.swing.JInternalFrame {
         setTitle("OS");
         setPreferredSize(new java.awt.Dimension(640, 480));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
-            }
             public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
@@ -244,6 +275,10 @@ public class TelaOs extends javax.swing.JInternalFrame {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameOpened(evt);
+            }
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
         });
 
@@ -436,6 +471,11 @@ public class TelaOs extends javax.swing.JInternalFrame {
         });
 
         btnOsExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infor/icones/delete.png"))); // NOI18N
+        btnOsExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOsExcluirActionPerformed(evt);
+            }
+        });
 
         btnOsImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/infor/icones/printer.png"))); // NOI18N
 
@@ -589,6 +629,11 @@ public class TelaOs extends javax.swing.JInternalFrame {
         // chamando o método altear_os
         alterar_os();
     }//GEN-LAST:event_btnOsAlterarActionPerformed
+
+    private void btnOsExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsExcluirActionPerformed
+        // chamando método excluir_os
+        excluir_os();
+    }//GEN-LAST:event_btnOsExcluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
